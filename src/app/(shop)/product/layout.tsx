@@ -8,7 +8,7 @@ export default function ProductLayout({
   return (
     <>
       <Script src="https://cdn.croissant.com/croissant-toggle-web-components/dist.js" />
-      <section>{children}</section>
+      <section className="container px-4 mx-auto">{children}</section>
     </>
   );
 }

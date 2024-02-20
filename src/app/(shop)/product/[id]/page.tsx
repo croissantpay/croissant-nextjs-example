@@ -1,5 +1,7 @@
-import CroissantTogglePdp from "@/components/croissant-toggle-pdp";
+import ProductDetails from "@/components/product-details";
 import { Suspense } from "react";
+import products from "@/data/products";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -8,17 +10,15 @@ type Props = {
 };
 
 export default function Page({ params }: Props) {
+  const product = products.find((p) => p.id === params.id);
+
+  if (!product) {
+    notFound();
+  }
+
   return (
-    <div>
-      Product Id: {params.id}
-      <Suspense fallback={<div>Loading...</div>}>
-        <CroissantTogglePdp
-          merchantId={process.env.NEXT_PUBLIC_CROISSANT_MERCHANT_ID!}
-          pricingUrl={process.env.NEXT_PUBLIC_CROISSANT_PRICING_URL!}
-          productId={params.id}
-          quantity="1"
-        />
-      </Suspense>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductDetails product={product} />
+    </Suspense>
   );
 }
